@@ -41,7 +41,7 @@ class FormatterTestCase(TestCase):
         self.assertEqual(data, "key1=342.23424 key2=-234234234.2342342")
 
     def test_string_value(self):
-        data = format_line(OrderedDict([
+        data = format_line( OrderedDict([
             ("key1", """some random !@#$%^"&**_+-={}\\|;':,./<>?)"""),
             ("key2", """here's a line with
 more stuff on the next""")
