@@ -62,4 +62,63 @@ more stuff on the next""")
         self.assertEqual(data, "measure.a=1ms measure.b=10 measure.c=100MB measure.d=1s")
 
 
+class NodeLogfmtFormatterTestCase(TestCase):
+    """
+    Test cases modified from node-logfmt
 
+    https://github.com/csquared/node-logfmt/blob/9cccf6273cdd862392ef7fea049d37a2b7c42e04/test/stringify_test.js
+
+
+    MIT LICENSE
+
+    Copyright (C) 2014 Chris Continanza
+
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be
+    included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+    OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    """
+    def test_string_spaces(self):
+        """
+        Quote strings with spaces
+        """
+        data = {'foo': "hello kitty"}
+        self.assertEqual("foo=\"hello kitty\"", format_line(data))
+    
+    def test_string_equals(self):
+        """
+        Quote strings with equals
+        """
+        data = {'foo': "hello=kitty"}
+        self.assertEqual("foo=\"hello=kitty\"", format_line(data))
+    
+    def test_string_spaces_quotes(self):
+        """
+        Escape quotes in strings with spaces
+        """
+        data = {'foo': 'hello my "friend"'}
+        self.assertEqual('foo="hello my \\"friend\\""', format_line(data))
+        data = {'foo': 'hello my "friend" whom I "love"'}
+        self.assertEqual('foo="hello my \\"friend\\" whom I \\"love\\""', format_line(data))
+    
+
+    def test_string_blackslashes(self):
+        """
+        Escape backslashes in strings
+        """
+        data = {'foo': 'why would you use \\LaTeX?'}
+        self.assertEqual('foo="why would you use \\\\LaTeX?"', format_line(data))
