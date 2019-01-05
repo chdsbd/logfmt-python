@@ -48,6 +48,15 @@ more stuff on the next""")
         ]))
 
         self.assertEqual(data, '''key1="some random !@#$%^\\"&**_+-={}\\|;\':,./<>?)" key2="here\'s a line with\nmore stuff on the next"''')
+    
+    def test_string_value_quoting(self):
+        data = format_line(OrderedDict([
+            ("measure.a", "1ms"),
+            ("measure.b", 10),
+            ("measure.c", "100MB"),
+            ("measure.d", "1s"),
+        ]))
+        self.assertEqual(data, "measure.a=1ms measure.b=10 measure.c=100MB measure.d=1s")
 
 
 
