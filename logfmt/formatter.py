@@ -16,7 +16,12 @@ def format_line(extra):
         else:
             if isinstance(v, (dict, object)):
                 v = str(v)
-            v = '"%s"' % v.replace('"', '\\"')
+            needs_quoting = ' ' in v or '=' in v
+            needs_escaping = '"' in v
+            if needs_escaping:
+                v = '%s' % v.replace('"', '\\"')
+            if needs_quoting:
+                v = '"%s"' % v
         outarr.append("%s=%s" % (k, v))
     return " ".join(outarr)
 
