@@ -41,7 +41,7 @@ class FormatterTestCase(TestCase):
         self.assertEqual(data, "key1=342.23424 key2=-234234234.2342342")
 
     def test_string_value(self):
-        data = format_line( OrderedDict([
+        data = format_line(OrderedDict([
             ("key1", """some random !@#$%^"&**_+-={}\\|;':,./<>?)"""),
             ("key2", """here's a line with
 more stuff on the next""")
@@ -49,15 +49,9 @@ more stuff on the next""")
 
         self.assertEqual(data, '''key1="some random !@#$%^\\"&**_+-={}\\|;\':,./<>?)" key2="here\'s a line with\nmore stuff on the next"''')
     
-    def test_string_value_quoting(self):
-        """
-        Other implementation do not quote strings when not necessary.
-
-        Examples:
-            - https://github.com/kr/logfmt
-            - https://github.com/csquared/node-logfmt
-            - https://github.com/cyberdelia/logfmt-ruby
-            - https://github.com/Sirupsen/logrus
+    def test_kr_logfmt(self):
+        """        
+        Test using canonical example from https://github.com/kr/logfmt/blob/b84e30acd515aadc4b783ad4ff83aff3299bdfe0/example_test.go#L45
         """
         data = format_line(OrderedDict([
             ("measure.a", "1ms"),
