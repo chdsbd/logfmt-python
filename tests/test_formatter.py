@@ -9,6 +9,10 @@ class FormatterTestCase(TestCase):
     def test_empty_log_line(self):
         data = format_line({})
         self.assertEqual(data, "")
+    
+    def test_empty_string(self):
+        data = format_line({'key':''})
+        self.assertEqual(data, 'key=""')
 
     def test_key_without_value(self):
         data = format_line( OrderedDict([("key1", None), ("key2", None)]) )
