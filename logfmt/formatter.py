@@ -22,6 +22,8 @@ def format_line(extra):
                 v = '%s' % v.replace('"', '\\"')
             if needs_quoting:
                 v = '"%s"' % v
+            if v == "":
+                v = '""'
         outarr.append("%s=%s" % (k, v))
     return " ".join(outarr)
 
